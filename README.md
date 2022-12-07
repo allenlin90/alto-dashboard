@@ -1,34 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+- [1. Description](#1-description)
+- [2. Requirements](#2-requirements)
 
-## Getting Started
 
-First, run the development server:
+# 1. Description
+From the following images of Chiller Plant Management System, please create a web
+application with real-time IoT data and device data which are fed from server via websocket protocol and http protocol respectively. And also, create unit tests using test framework.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+# 2. Requirements
+- Create a web application using Next.js with 2 pages
+  - Login page
+  - Overview page
+- Stream IoT data via Websocket protocol with mock data and other data with REST api (Please prepare mock servers for providing data)
+- Implement authentication system
+- Unit test with Jest or other frameworks
+- Able to edit device location on floor plan in Overview page using x,y coordinate
+- Devices contain 4 status (with different images on floor plan)
+  - Online
+  - Offline
+  - Disconnect
+  - Failed
+- Unit test
+- For Speed control
+- README.md with all necessary informations
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Figma link:
+[https://www.figma.com/file/6xoGYA10kZRH89Wo8GQjLV/Frontend-Assignment?node-id=1%3A1366&t=m2nf7ePWaLpfvNvZ-1](https://www.figma.com/file/6xoGYA10kZRH89Wo8GQjLV/Frontend-Assignment?node-id=1%3A1366&t=m2nf7ePWaLpfvNvZ-1)
