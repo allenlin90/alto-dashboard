@@ -11,3 +11,8 @@ export interface Link {
   disabled?: boolean;
   links?: Link[];
 }
+
+export enum Locales {
+  en = 'en',
+  th = 'th',
+}
