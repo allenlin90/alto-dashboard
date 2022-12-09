@@ -1,15 +1,11 @@
-import { useWebSocket } from 'hooks/useWebSocket';
-import { SocketContext } from 'context/webSocket';
+import DataLayer from './floorplan/DataLayer';
 
 export interface FloorplanProps {
   floorplan: any;
 }
 
 export const Floorplan: React.FC<FloorplanProps> = ({ floorplan }) => {
-  // TODO: setup websocket
-  const socket = useWebSocket('floorplan');
-
-  return <SocketContext.Provider value={socket}></SocketContext.Provider>;
+  return <DataLayer initData={floorplan}>{null}</DataLayer>;
 };
 
 export default Floorplan;

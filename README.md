@@ -29,7 +29,7 @@ From the following images of Chiller Plant Management System, please create a we
 # 2. Requirements
 - Create a web application using Next.js with 2 pages
   - [x] Login page
-  - [ ] Overview page
+  - [x] Overview page
 - [x] Stream IoT data via Websocket protocol with mock data and other data with REST api (Please prepare mock servers for providing data)
 - [x] Implement authentication system
 - [x] Unit test with Jest or other frameworks
@@ -82,6 +82,10 @@ Figma link:
 4. App optimization
    1. Code splitting and tree shaking.
    2. Note - Next.js 13 uses `Rust` engine to compile without using `babel` which requires further research. 
+5. Micro-fontend architecture to separate as 
+   1. App shell to contain the features
+   2. Drag and drop on floorplan in the grid view
+   3. Dashboard and reports
 
 ---
 
@@ -182,10 +186,15 @@ Figma link:
 
 #### 5.2.1.3. Main - Overview
 1. The UI could be composed with 2 layers
-   1. Meter of monitoring cards for different business entity (e.g. residence, office-1, office-2).
-   2. Floor plan with devices and monitors in pipeline view. 
+   1. `MeterCards` - Meter of monitoring cards for different business entity (e.g. residence, office-1, office-2).
+   2. `Floorplan` - Floorplan with devices and monitors in pipeline view. 
 2. Drag and drop libraries (e.g. `react-grid-layout` and `react-beautiful-dnd`) may be used to faciliate and acclerate development. 
 3. Websocket connection can be setup when these UI renders and close when UI off load. 
+4. Data handlers and context providers are kept in `DataLayer` for each component. However, this may change according to design and business logic.
+5. Both `MeterCards` and `Floorplan` have a grid UI layer for users to interact with the floorplan and move the cards around for the dashboard overview. 
+   1. `MeterCardGrid` - Drag and drop monitoring cards.
+   2. `FloorplanGrid` - Drag and drop devices on floorplan.
+6. When drag and drop the entities, what are the constraints on interactions and overlaying the elements?
 
 # 6. Extra features (better to have)
 1. Dataset could tremendous. `IndexedDB` may be used to handle local cache/data.
@@ -212,4 +221,8 @@ Figma link:
    1. Numbers of switches in power a grids.
    2. Multiple valves through a pipeline. 
    3. How to constrain the setup? 
+   4. Does it allow users to rotate devices, pipes and gadgets? and how?
 7. What is the acceptble latency for data transmission?
+8. What's the userflow to add/remove device on floorplan?
+9. How does a user add/remove a meter card for monitoring?
+10. What will happen when a user uses cursor to hover or clicks/taps on the device in floorplan?

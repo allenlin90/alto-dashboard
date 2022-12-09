@@ -1,9 +1,9 @@
-import type { Socket } from 'net';
+import { useContext } from 'react';
+import { SocketContext } from 'context/webSocket';
 
-export const useWebSocket = (_pointer: string): Socket | null => {
-  // pointer to map the endpoint which the client can set websocket connection with
-  // TODO: setup socket connection
-  return {} as Socket;
+export const useWebSocket = () => {
+  const socket = useContext(SocketContext);
+  return socket;
 };
 
 export default useWebSocket;
