@@ -14,12 +14,13 @@
       - [4.2.3.2. Login form](#4232-login-form)
 - [5. Overview Page](#5-overview-page)
   - [5.1. Assumptions](#51-assumptions)
-  - [5.2. Websocket connection](#52-websocket-connection)
-  - [5.3. Overview UI](#53-overview-ui)
-    - [5.3.1. Layout](#531-layout)
-      - [5.3.1.1. Sidenav](#5311-sidenav)
-      - [5.3.1.2. Topnav](#5312-topnav)
-  - [5.4. Better to have](#54-better-to-have)
+  - [5.2. Overview UI](#52-overview-ui)
+    - [5.2.1. Layout](#521-layout)
+      - [5.2.1.1. Sidenav](#5211-sidenav)
+      - [5.2.1.2. Topnav](#5212-topnav)
+      - [5.2.1.3. Main - Overview](#5213-main---overview)
+- [6. Extra features (better to have)](#6-extra-features-better-to-have)
+- [7. Questions to project](#7-questions-to-project)
 
 
 # 1. Description
@@ -29,18 +30,18 @@ From the following images of Chiller Plant Management System, please create a we
 - Create a web application using Next.js with 2 pages
   - [x] Login page
   - [ ] Overview page
-- [ ] Stream IoT data via Websocket protocol with mock data and other data with REST api (Please prepare mock servers for providing data)
+- [x] Stream IoT data via Websocket protocol with mock data and other data with REST api (Please prepare mock servers for providing data)
 - [x] Implement authentication system
-- [ ] Unit test with Jest or other frameworks
+- [x] Unit test with Jest or other frameworks
 - [ ] Able to edit device location on floor plan in Overview page using x,y coordinate
 - Devices contain 4 status (with different images on floor plan)
-  - [ ] Online
-  - [ ] Offline
-  - [ ] Disconnect
-  - [ ] Failed
+  - Online
+  - Offline
+  - Disconnect
+  - Failed
 - [x] Unit test
 - [ ] For Speed control
-- [ ] README.md with all necessary informations
+- [x] README.md with all necessary informations
 
 Figma link:
 [https://www.figma.com/file/6xoGYA10kZRH89Wo8GQjLV/Frontend-Assignment?node-id=1%3A1366&t=m2nf7ePWaLpfvNvZ-1](https://www.figma.com/file/6xoGYA10kZRH89Wo8GQjLV/Frontend-Assignment?node-id=1%3A1366&t=m2nf7ePWaLpfvNvZ-1)
@@ -146,27 +147,27 @@ Figma link:
 # 5. Overview Page
 ## 5.1. Assumptions
 1. Data flow 
-   1. The web app may be loaded with **SSR** with initial required data
-   2. Showing loading transition
+   1. The web app may be loaded with **SSR** with initial required data.
+   2. Showing loading transition.
    3. Keep updating to local data storage with web sockets for realtime updates.
+2. Websocket connection
+   1. Setup websocket connection on global or page level.
+   2. Different dataset is handled by differnt endpoints/sockets. 
 
-## 5.2. Websocket connection
-1. Setup websocket connection on global or page level.
-
-## 5.3. Overview UI
-### 5.3.1. Layout
+## 5.2. Overview UI
+### 5.2.1. Layout
 1. The `overview` layout is composed by 4 components into `components/layout/overview/DashboardLayout.tsx`.
    1. `components/layout/overview/components/DashboardSideNav.tsx`
    2. `components/layout/overview/components/DashboardMain.tsx`
    3. `components/layout/overview/components/DashboardTopNav.tsx`
    4. `components/layout/overview/components/DashboardFooter.tsx`
 
-#### 5.3.1.1. Sidenav
+#### 5.2.1.1. Sidenav
 1. Routes on side panel on the left can be implemented with **paths** to seperate components. Please refer to `constants/routes.ts`
 2. User customization may be provided such as user business logo.
 3. Image/Logo in the side nav may be hosted on CDN, whose hostname should be given in `images` in `next.config.js`. 
 
-#### 5.3.1.2. Topnav
+#### 5.2.1.2. Topnav
 1. "**Overview**" can be an image or gradient-colored text. 
 2. `components/common/Timer.tsx` to udpate current local time with `setInterval`. 
    1. A wrapper can be added to style the text. 
@@ -179,7 +180,36 @@ Figma link:
 5. `components/layout/dashboard/components/top-nav/UserDrawer.tsx`
    1. Requirements on handling user actions (e.g. checking profile, signing out)
 
-## 5.4. Better to have
+#### 5.2.1.3. Main - Overview
+1. The UI could be composed with 2 layers
+   1. Meter of monitoring cards for different business entity (e.g. residence, office-1, office-2).
+   2. Floor plan with devices and monitors in pipeline view. 
+2. Drag and drop libraries (e.g. `react-grid-layout` and `react-beautiful-dnd`) may be used to faciliate and acclerate development. 
+3. Websocket connection can be setup when these UI renders and close when UI off load. 
+
+# 6. Extra features (better to have)
 1. Dataset could tremendous. `IndexedDB` may be used to handle local cache/data.
+   1. Work off main thread.
+   2. Supports offline mode.
+   3. Up to 50 mb on mobile devices and more on desktop/laptop browers. (`localStorage` is only up to 5mb and may block main thread)
 2. **Web workers** can be used to offload heavy executions to prevent blocking JS main thread.
-3. When devices change to certain status (e.g. failed), sending push notification, SMS, popup dialog for alert. 
+3. **Service workers** may be used to intercept http requests and work on offline features. 
+4. App can be considered to build as **PWA**.
+5. When devices change to certain status (e.g. Failed or Disconnect), sending push notification, SMS, popup dialog for alert.
+
+# 7. Questions to project
+1. What is `Speed control`?
+2. Does the flow plan allows zoom in/out?
+3. Though the web app layout is more likely to be fit desktop size, shall the app support tablet size (~768px) and touch screen?
+4. How responsive should the app be? Is there a UI design for mobile (>600px) devices?
+5. What are the requirements on 
+   1. Notificaitons on top nav bar?
+   2. User icon with drawer?
+   3. Are the cards with monitoring meters re-sizable and draggable?
+   4. What is the limitation on floorplan?
+      1. Maximum number of devices/instances 
+6. Floorplan may have various devices in different scope such as 
+   1. Numbers of switches in power a grids.
+   2. Multiple valves through a pipeline. 
+   3. How to constrain the setup? 
+7. What is the acceptble latency for data transmission?
