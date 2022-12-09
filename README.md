@@ -1,5 +1,9 @@
 - [1. Description](#1-description)
 - [2. Requirements](#2-requirements)
+- [Project setup](#project-setup)
+  - [Project configurations](#project-configurations)
+    - [Initial setup](#initial-setup)
+    - [Better to have](#better-to-have)
 - [3. Authentication](#3-authentication)
   - [3.1. Assumptions](#31-assumptions)
   - [3.2. Requirements](#32-requirements)
@@ -33,6 +37,43 @@ application with real-time IoT data and device data which are fed from server vi
 
 Figma link:
 [https://www.figma.com/file/6xoGYA10kZRH89Wo8GQjLV/Frontend-Assignment?node-id=1%3A1366&t=m2nf7ePWaLpfvNvZ-1](https://www.figma.com/file/6xoGYA10kZRH89Wo8GQjLV/Frontend-Assignment?node-id=1%3A1366&t=m2nf7ePWaLpfvNvZ-1)
+
+---
+# Project setup
+1. Referring `.env.example` for required ENVs.
+2. Install dependencies with `npm run install` or `yarn install`. 
+   1. Recommend to use `yarn` - installing globally with `npm install yarn -g` (Admin permission such as `sudo` may be required).
+3. Run `yarn dev` to run app in development mode locally.
+   1. The default port is `3000`.
+   2. Change the port with `-p` flag (e.g. `npm run dev -p 8080` or `yarn dev -p 8080`)
+4. Run `yarn lint` to parse and check code with `eslint`.
+5. Run `yarn lint:type` to proceed type sanitization. 
+6. Run `yarn test` to run on all local unit tests with `jest` and `react-testing-library` for UI components.
+7. Run `yarn analyze` to check visualized package/dependency size.
+8. Run `yarn build` to build app in production. 
+9. Run `yarn start` to run built app. 
+
+## Project configurations
+### Initial setup
+1. `husky` and `commitlint` are used for commit linting and format unification. This works well with `semantic-release` for app versioning. Configuration is in `commitlint.config.js`
+2. `eslint` is used for code linting. Configuration is in `.eslintrc.json`.
+3. `typescript` is used for type checking. Configuration is in `tsconfig.json`.
+   1. `baseUrl` is set as `.`, which allows ESM to be imported without `./` on root directory. 
+4. `next-i18next` is used for internationalization. Configuration is in `next-i18next.config.js`, imported to `next.config.js`.
+5. `next-seo` is used for SEO meta data on page level. Import `Seo` component from `components/common/Seo` to use in page files. 
+
+### Better to have 
+1. Action scripts for automated CI/CD process.
+   1. `.github/actions`
+      1. Linting
+      2. Type checking
+      3. Test code coverage report
+   2. `Docker`
+2. `prettier` for code styling for formatting. 
+3. `semantic-release` to update `CHANGELOG` with git commits. 
+4. App optimization
+   1. Code splitting and tree shaking.
+   2. Note - Next.js 13 uses `Rust` engine to compile without using `babel` which requires further research. 
 
 ---
 
