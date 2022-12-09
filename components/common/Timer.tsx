@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export const Timer: React.FC = () => {
+  const timerRef = useRef<NodeJS.Timeout>();
   const [time, setTime] = useState<string>(new Date().toString());
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date().toString());
-    }, 1000);
+    if (typeof window !== 'undefined') {
+      timerRef.current = setInterval(() => {
+        setTime(new Date().toString());
+      }, 1000);
+    }
 
-    return () => clearInterval(interval);
+    return () => clearInterval(timerRef.current);
   }, []);
 
   return <>{time}</>;

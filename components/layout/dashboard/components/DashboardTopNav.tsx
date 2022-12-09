@@ -1,8 +1,10 @@
 import type { NotificationsProps } from './top-nav/Notifications';
-import Timer from 'components/common/Timer';
 import UserDrawer from './top-nav/UserDrawer';
 import LangSelector from './top-nav/LangSelector';
 import Notifications from './top-nav/Notifications';
+
+import dynamic from 'next/dynamic';
+const Timer = dynamic(() => import('components/common/Timer'), { ssr: false });
 
 export interface DashboardTopNavProps extends NotificationsProps {}
 

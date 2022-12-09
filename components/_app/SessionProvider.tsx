@@ -68,7 +68,8 @@ export const SessionProvider: React.FC<{
       }, timeout);
     };
 
-    validateUser();
+    // TODO: resume to implement validation
+    // validateUser();
 
     return () => clearTimeout(timerRef.current);
   }, [auth, router, timeout]);

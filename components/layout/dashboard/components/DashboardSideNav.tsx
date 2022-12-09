@@ -7,14 +7,20 @@ export interface DashboardSideNavProps {
 }
 
 export const DashboardSideNav: React.FC<DashboardSideNavProps> = ({
-  imgSrc = '/assets/images/altotech_logo.png', // static placeholder
+  imgSrc = '/images/altotech_logo.png', // static placeholder
 }) => {
   return (
     <>
       <div>
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', width: '225px', height: '225px' }}>
           {/* TODO: lazyload with minimized shimmer/skeleton animation */}
-          <Image src={imgSrc} alt='plant_logo' priority />
+          <Image
+            src={imgSrc}
+            alt='plant_logo'
+            priority
+            width={225}
+            height={225}
+          />
         </div>
         {routes.map(({ id, title, href }) => {
           if (!href) return null;

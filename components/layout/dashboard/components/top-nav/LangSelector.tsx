@@ -1,6 +1,6 @@
 import type { Locales } from 'types';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { i18n } from 'next-i18next.config';
 import { useRouter } from 'next/dist/client/router';
 
@@ -17,13 +17,8 @@ export const LangSelector: React.FC = () => {
     <div>
       {locales.map((locale, index) => {
         return (
-          <>
-            <Link
-              key={locale}
-              href={`${router.asPath}`}
-              locale={selectedLang}
-              passHref
-            >
+          <Fragment key={locale}>
+            <Link href={`${router.asPath}`} locale={selectedLang} passHref>
               <button
                 // TODO: highlight/style selected language button
                 type='button'
@@ -34,7 +29,7 @@ export const LangSelector: React.FC = () => {
             </Link>
             {/* TODO: use a wrapper to handle pipe styling between buttons */}
             {index !== locales.length - 1 ? '|' : ''}
-          </>
+          </Fragment>
         );
       })}
     </div>
