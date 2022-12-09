@@ -15,7 +15,12 @@ const nextConfig = {
   publicRuntimeConfig: {
     version,
   },
-  serverRuntimeConfig: {},
+  serverRuntimeConfig: {
+    secret: {
+      accessToken: process.env.accessTokenSecret ?? '',
+      refreshToken: process.env.refreshTokenSecret ?? '',
+    },
+  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

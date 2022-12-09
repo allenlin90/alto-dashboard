@@ -38,30 +38,33 @@ Figma link:
 
 # 3. Authentication
 ## 3.1. Assumptions
-1. The app uses token-based authentication. `jsonwebtoken` could be the option.
+1. All connections are under `https`.
+2. The app uses token-based authentication. `jsonwebtoken` could be the option.
    1. If the API services are managed under monolithic structure, a "**session ID**" may be used.
    2. Token-based could beneficial when backend is managed with micro-services. 
    3. `accessToken` may be set as cookie or configured to intercept with `axios` requests as `Authorization` header. 
    4. `refreshToken` may be stored in `localStorage` (or `sessionStorage`) and should be revoked every time when it is used. 
-2. All connections are under `https`.
 3. Sign up (or registration) process is out of requirement scope.
 4. The following API endpoints can be external services or built-in under `pages/apis` in the same next.js app.
-5. If we may use `next-auth` package, which abstract the authentication process and management, we'd only need to config `SessionProvider` in `_app` and `pages/api/auth/[...nextauth].ts`.
+5. If we may use `next-auth` package, which abstract the authentication process and management, we'd only need to config `SessionProvider` in `_app` for client-side global session management and `pages/api/auth/[...nextauth].ts` for server-side connections.
 
 ## 3.2. Requirements
 ### 3.2.1. APIs
-1. GET `/auth` - Check request cookie/header if the user is still in valid authentication/authorization. 
-2. POST `/signin`
+1. APIs may be proxied with `pages/api` to hide sensitive credentials or connect to external authentication services directly. 
+2. GET `/auth/me`
+   1. Check request cookie/header if the user is still in valid authentication. 
+   2. Optional - Look up latest user authorization.
+3. POST `/signin`
    1. Request - Receives `username` and `password` as request body.
    2. Response 
       1. `accessToken` assigned as cookie with `httpOnly`, `secure` flag, and relatively short life-span (e.g. 15 mins).
       2. `refreshToken` stored in `localStorage` which has a longer life-span (e.g. 7 days)
-3. POST `/signout`
+4. POST `/signout`
    1. Request
       1. Receives `refreshToken` as request body. 
       2. Revoke `refreshToken` in storage (e.g. database/cache-layer)
    2. Response `204` or `205`
-4. POST `/refresh`
+5. POST `/refresh`
    1. Request
       1. Receives `refreshToken` as request body
       2. Revoke `refreshToken` in storage (e.g. database/cache-layer)
