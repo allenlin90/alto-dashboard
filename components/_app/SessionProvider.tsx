@@ -1,14 +1,10 @@
 import type { Dictionary } from 'types';
 import axios from 'axios';
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import { createContext, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useState, useEffect, useRef } from 'react';
+import { SessionContext } from 'context/session';
 
-type Session = Dictionary<any> | null;
-
-export const SessionContext = createContext<
-  [Session, Dispatch<SetStateAction<Session>>] | null
->(null);
+export type Session = Dictionary<any> | null;
 
 export const SessionProvider: React.FC<{
   children: React.ReactNode;
