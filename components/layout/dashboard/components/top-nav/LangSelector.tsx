@@ -1,28 +1,37 @@
 import type { Locales } from 'types';
-import { i18n } from 'next-i18next.config';
+import Link from 'next/link';
 import { useState } from 'react';
+import { i18n } from 'next-i18next.config';
+import { useRouter } from 'next/dist/client/router';
 
-const locales = i18n.locales as `${Locales}`[];
-const defaultLocale = i18n.defaultLocale as `${Locales}`;
+const locales = (i18n.locales ?? []) as `${Locales}`[];
+const defaultLocale = (i18n.defaultLocale ?? 'en') as `${Locales}`;
 
 export const LangSelector: React.FC = () => {
-  const [_selectedLang, setSelectedLang] = useState<`${Locales}`>(
-    defaultLocale || 'en'
-  );
+  const router = useRouter();
+  const [selectedLang, setSelectedLang] = useState<`${Locales}`>(defaultLocale);
+
+  if (!locales.length) return null;
 
   return (
     <div>
       {locales.map((locale, index) => {
         return (
           <>
-            <button
-              // TODO: highlight/style selected language button
+            <Link
               key={locale}
-              type='button'
-              onClick={() => setSelectedLang(locale)}
+              href={`${router.asPath}`}
+              locale={selectedLang}
+              passHref
             >
-              {locale.toUpperCase()}
-            </button>
+              <button
+                // TODO: highlight/style selected language button
+                type='button'
+                onClick={() => setSelectedLang(locale)}
+              >
+                {locale.toUpperCase()}
+              </button>
+            </Link>
             {/* TODO: use a wrapper to handle pipe styling between buttons */}
             {index !== locales.length - 1 ? '|' : ''}
           </>
