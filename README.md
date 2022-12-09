@@ -12,6 +12,13 @@
     - [4.2.3. UI components](#423-ui-components)
       - [4.2.3.1. Image slider](#4231-image-slider)
       - [4.2.3.2. Login form](#4232-login-form)
+- [5. Overview Page](#5-overview-page)
+  - [5.1. Assumptions](#51-assumptions)
+  - [5.2. Websocket connection](#52-websocket-connection)
+  - [5.3. Overview UI](#53-overview-ui)
+    - [5.3.1. Layout](#531-layout)
+      - [5.3.1.1. Sidenav](#5311-sidenav)
+  - [5.4. Better to have](#54-better-to-have)
 
 
 # 1. Description
@@ -20,20 +27,20 @@ application with real-time IoT data and device data which are fed from server vi
 
 # 2. Requirements
 - Create a web application using Next.js with 2 pages
-  - Login page
-  - Overview page
-- Stream IoT data via Websocket protocol with mock data and other data with REST api (Please prepare mock servers for providing data)
-- Implement authentication system
-- Unit test with Jest or other frameworks
-- Able to edit device location on floor plan in Overview page using x,y coordinate
+  - [x] Login page
+  - [ ] Overview page
+- [ ] Stream IoT data via Websocket protocol with mock data and other data with REST api (Please prepare mock servers for providing data)
+- [x] Implement authentication system
+- [ ] Unit test with Jest or other frameworks
+- [ ] Able to edit device location on floor plan in Overview page using x,y coordinate
 - Devices contain 4 status (with different images on floor plan)
-  - Online
-  - Offline
-  - Disconnect
-  - Failed
-- Unit test
-- For Speed control
-- README.md with all necessary informations
+  - [ ] Online
+  - [ ] Offline
+  - [ ] Disconnect
+  - [ ] Failed
+- [x] Unit test
+- [ ] For Speed control
+- [ ] README.md with all necessary informations
 
 Figma link:
 [https://www.figma.com/file/6xoGYA10kZRH89Wo8GQjLV/Frontend-Assignment?node-id=1%3A1366&t=m2nf7ePWaLpfvNvZ-1](https://www.figma.com/file/6xoGYA10kZRH89Wo8GQjLV/Frontend-Assignment?node-id=1%3A1366&t=m2nf7ePWaLpfvNvZ-1)
@@ -135,3 +142,24 @@ Figma link:
    1. `components/auth/login-form/UsernameInput.tsx`
    2. `components/auth/login-form/PasswordInput.tsx`
 4. Component structure may vary according to design and business logic. 
+
+# 5. Overview Page
+## 5.1. Assumptions
+1. Data flow 
+   1. The web app may be loaded with **SSR** with initial required data
+   2. Showing loading transition
+   3. Keep updating to local data storage with web sockets for realtime updates.
+
+## 5.2. Websocket connection
+1. Setup websocket connection on global or page level.
+
+## 5.3. Overview UI
+### 5.3.1. Layout
+#### 5.3.1.1. Sidenav
+1. Routes on side panel on the left can be implemented with **paths** to seperate components. Please refer to `constants/routes.ts`
+2. User customization may be provided such as user business logo.
+3. Image/Logo in the side nav may be hosted on CDN, whose hostname should be given in `images` in `next.config.js`. 
+
+## 5.4. Better to have
+1. Dataset could tremendous. `IndexedDB` may be used to handle local cache/data.
+2. **Web workers** can be used to offload heavy executions to prevent blocking JS main thread.
