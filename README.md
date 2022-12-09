@@ -18,12 +18,12 @@
   - [5.3. Overview UI](#53-overview-ui)
     - [5.3.1. Layout](#531-layout)
       - [5.3.1.1. Sidenav](#5311-sidenav)
+      - [5.3.1.2. Topnav](#5312-topnav)
   - [5.4. Better to have](#54-better-to-have)
 
 
 # 1. Description
-From the following images of Chiller Plant Management System, please create a web
-application with real-time IoT data and device data which are fed from server via websocket protocol and http protocol respectively. And also, create unit tests using test framework.
+From the following images of Chiller Plant Management System, please create a web application with real-time IoT data and device data which are fed from server via websocket protocol and http protocol respectively. And also, create unit tests using test framework.
 
 # 2. Requirements
 - Create a web application using Next.js with 2 pages
@@ -155,11 +155,31 @@ Figma link:
 
 ## 5.3. Overview UI
 ### 5.3.1. Layout
+1. The `overview` layout is composed by 4 components into `components/layout/overview/DashboardLayout.tsx`.
+   1. `components/layout/overview/components/DashboardSideNav.tsx`
+   2. `components/layout/overview/components/DashboardMain.tsx`
+   3. `components/layout/overview/components/DashboardTopNav.tsx`
+   4. `components/layout/overview/components/DashboardFooter.tsx`
+
 #### 5.3.1.1. Sidenav
 1. Routes on side panel on the left can be implemented with **paths** to seperate components. Please refer to `constants/routes.ts`
 2. User customization may be provided such as user business logo.
 3. Image/Logo in the side nav may be hosted on CDN, whose hostname should be given in `images` in `next.config.js`. 
 
+#### 5.3.1.2. Topnav
+1. "**Overview**" can be an image or gradient-colored text. 
+2. `components/common/Timer.tsx` to udpate current local time with `setInterval`. 
+   1. A wrapper can be added to style the text. 
+   2. More options may be added to the component as props to configure locales, time format, etc.
+3. `components/layout/dashboard/components/top-nav/LangSelector.tsx` to switch between languages (`en` and `th` in this case).
+4. `components/layout/dashboard/components/top-nav/Notifications.tsx`
+   1. Polling, SSE, or Websocket to notification service to fetch latest notifications.
+      1. Abstracted with `useNotification` custom hook.
+   2. Mark revealed notification as "read" when open drawer. 
+5. `components/layout/dashboard/components/top-nav/UserDrawer.tsx`
+   1. Requirements on handling user actions (e.g. checking profile, signing out)
+
 ## 5.4. Better to have
 1. Dataset could tremendous. `IndexedDB` may be used to handle local cache/data.
 2. **Web workers** can be used to offload heavy executions to prevent blocking JS main thread.
+3. When devices change to certain status (e.g. failed), sending push notification, SMS, popup dialog for alert. 
