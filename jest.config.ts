@@ -7,9 +7,6 @@ export const setting = {
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
   transformIgnorePatterns: ['<rootDir>/node_modules/?!uuid'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  moduleNameMapper: {
-    '\\.(scss|sass|css|less)$': 'identity-obj-proxy',
-  },
   moduleDirectories: ['node_modules', '<rootDir>'],
 };
 
