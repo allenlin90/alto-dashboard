@@ -1,17 +1,17 @@
 - [1. Description](#1-description)
 - [2. Requirements](#2-requirements)
-- [Project setup](#project-setup)
-  - [Project configurations](#project-configurations)
-    - [Initial setup](#initial-setup)
-    - [Better to have](#better-to-have)
-- [3. Authentication](#3-authentication)
-  - [3.1. Assumptions](#31-assumptions)
-  - [3.2. Requirements](#32-requirements)
-    - [3.2.1. APIs](#321-apis)
-    - [3.2.2. Global session manager](#322-global-session-manager)
-    - [3.2.3. UI components](#323-ui-components)
-      - [3.2.3.1. Image slider](#3231-image-slider)
-      - [3.2.3.2. Login form](#3232-login-form)
+- [3. Project setup](#3-project-setup)
+  - [3.1. Project configurations](#31-project-configurations)
+    - [3.1.1. Initial setup](#311-initial-setup)
+    - [3.1.2. Better to have](#312-better-to-have)
+- [4. Authentication](#4-authentication)
+  - [4.1. Assumptions](#41-assumptions)
+  - [4.2. Requirements](#42-requirements)
+    - [4.2.1. APIs](#421-apis)
+    - [4.2.2. Global session manager](#422-global-session-manager)
+    - [4.2.3. UI components](#423-ui-components)
+      - [4.2.3.1. Image slider](#4231-image-slider)
+      - [4.2.3.2. Login form](#4232-login-form)
 
 
 # 1. Description
@@ -39,7 +39,7 @@ Figma link:
 [https://www.figma.com/file/6xoGYA10kZRH89Wo8GQjLV/Frontend-Assignment?node-id=1%3A1366&t=m2nf7ePWaLpfvNvZ-1](https://www.figma.com/file/6xoGYA10kZRH89Wo8GQjLV/Frontend-Assignment?node-id=1%3A1366&t=m2nf7ePWaLpfvNvZ-1)
 
 ---
-# Project setup
+# 3. Project setup
 1. Referring `.env.example` for required ENVs.
 2. Install dependencies with `npm run install` or `yarn install`. 
    1. Recommend to use `yarn` - installing globally with `npm install yarn -g` (Admin permission such as `sudo` may be required).
@@ -53,8 +53,8 @@ Figma link:
 8. Run `yarn build` to build app in production. 
 9. Run `yarn start` to run built app. 
 
-## Project configurations
-### Initial setup
+## 3.1. Project configurations
+### 3.1.1. Initial setup
 1. `husky` and `commitlint` are used for commit linting and format unification. This works well with `semantic-release` for app versioning. Configuration is in `commitlint.config.js`
 2. `eslint` is used for code linting. Configuration is in `.eslintrc.json`.
 3. `typescript` is used for type checking. Configuration is in `tsconfig.json`.
@@ -62,7 +62,7 @@ Figma link:
 4. `next-i18next` is used for internationalization. Configuration is in `next-i18next.config.js`, imported to `next.config.js`.
 5. `next-seo` is used for SEO meta data on page level. Import `Seo` component from `components/common/Seo` to use in page files. 
 
-### Better to have 
+### 3.1.2. Better to have 
 1. Action scripts for automated CI/CD process.
    1. `.github/actions`
       1. Linting
@@ -77,8 +77,8 @@ Figma link:
 
 ---
 
-# 3. Authentication
-## 3.1. Assumptions
+# 4. Authentication
+## 4.1. Assumptions
 1. All connections are under `https`.
 2. The app uses token-based authentication. `jsonwebtoken` could be the option.
    1. If the API services are managed under monolithic structure, a "**session ID**" may be used.
@@ -89,8 +89,8 @@ Figma link:
 4. The following API endpoints can be external services or built-in under `pages/apis` in the same next.js app.
 5. If we may use `next-auth` package, which abstract the authentication process and management, we'd only need to config `SessionProvider` in `_app` for client-side global session management and `pages/api/auth/[...nextauth].ts` for server-side connections.
 
-## 3.2. Requirements
-### 3.2.1. APIs
+## 4.2. Requirements
+### 4.2.1. APIs
 1. APIs may be proxied with `pages/api` to hide sensitive credentials or connect to external authentication services directly. 
 2. GET `/auth/me`
    1. Check request cookie/header if the user is still in valid authentication. 
@@ -111,24 +111,24 @@ Figma link:
       2. Revoke `refreshToken` in storage (e.g. database/cache-layer)
    2. Response - New `accessToken` and `refreshToken`. 
 
-### 3.2.2. Global session manager
+### 4.2.2. Global session manager
 1. This part could be skipped if we use `next-auth` with its `SessionProvider`. 
 2. Custom `SessionManager` placed in `_app`
    1. Short polling `/auth` to check if user is authenticated. We may use `@tanstack/react-query` (former `react-query`), `setTimeout` or `setInterval`. 
    2. Refresh token when `accessToken` expires with `refreshToken` stored in `localStorage`.
    3. Client-side route control for authorized services.
 
-### 3.2.3. UI components
+### 4.2.3. UI components
 1. `PortfolioLayout` is introduced for 2 side layout (as a portfolio).
    1. flexbox
    2. grid
-#### 3.2.3.1. Image slider 
+#### 4.2.3.1. Image slider 
 1. Multiple UI libraries may be available such as `swiper.js`. 
 2. The component may be built with pure html and css without Javascript
    1. `input:checkbox` with checked state CSS selector
    2. `label` to show selected checkboxes as bar, dots, or image selection indicator 
 
-#### 3.2.3.2. Login form
+#### 4.2.3.2. Login form
 1. `react-hook-form` may be applied for form state management and state handling. 
 2. For UI details, please refer to `components/auth/Login.tsx`
 3. `components/auth/Login.tsx`
